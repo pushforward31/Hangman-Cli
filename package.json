@@ -1,0 +1,22 @@
+{
+  "name": "hangman-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "guesses.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pushforward31/Hangman-Cli.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pushforward31/Hangman-Cli/issues"
+  },
+  "homepage": "https://github.com/pushforward31/Hangman-Cli#readme",
+  "dependencies": {
+    "inquirer": "^5.1.0"
+  }
+}
