@@ -1,4 +1,4 @@
-var newGuess = ["The_Matrix", "Black_Panther", "Avatar", "Thor"];
+var newGuess = ["gladiator", "titanic", "avatar", "braveheart", "jaws", "rocky"];
 
 
 module.exports = newGuess;
