@@ -1,5 +1,6 @@
 var inquirer = require("inquirer");
 var newGuess = require("./guesses.js");
+var isLetter = require('is-letter');
 //var newGuess = ["gladiator", "titanic", "avatar", "braveheart", "jaws", "rocky"];
 var chosen;
 var letterChoices = [];
@@ -20,17 +21,24 @@ letter.prototype.printinfo = function() {
     console.log("Current choices " + this.name)
 };
 //render question
-function startGame(){
-	inquirer.prompt([{
-		type: "confirm",
-		name: "name",
-		message: "Do you want to play a game? (In the jigsaw voice)"
-	}]).then(function(){
-		renderQuestion();
-		askQuestion();
-	});
-	
+function startGame() {
+    inquirer.prompt([{
+        type: "confirm",
+        name: "start",
+        message: "Do you want to play a game? (In the jigsaw voice)",
+
+    }]).then(function(answer) {
+        if (answer.start) {
+            renderQuestion();
+            askQuestion();
+        } else {
+            console.log("Well alrighty then loser!")
+            // return;
+        }
+    });
+
 }
+
 function renderQuestion() {
 
 
@@ -50,13 +58,14 @@ function renderQuestion() {
 //letter.prototype.printinfo = function({})
 /////////////////////
 function askQuestion() {
-    if (guessesLeft > 0)  {
+    if (guessesLeft > 0) {
         console.log("The subjects are all time good movies")
 
         inquirer.prompt([{
                 type: "input",
                 name: "name",
-                message: "Guess a letter?"
+                message: "Guess a letter?",
+                validate: isLetter
             }
 
         ]).then(function correctAnswer(answers) {
@@ -71,26 +80,26 @@ function askQuestion() {
             if (chosen.indexOf(choices) > -1) {
                 for (var i = 0; i < chosen.length; i++) {
                     if (chosen[i] === choices) {
-                    	blanks[i]=choices;
-                       // blanks[i] =newRender ;
+                        blanks[i] = choices;
+                        // blanks[i] =newRender ;
                         console.log(blanks.join(""));
                         correctCounter++;
-                		winLose();
-                		
+                        winLose();
+
                     }
 
                 }
                 console.log("yes....keep going!");
-               
-            }else {
-            	console.log(blanks.join(""));
+
+            } else {
+                console.log(blanks.join(""));
                 console.log("incorrect..try again!");
                 guessesLeft--;
-            
-            //correctAnswer();
 
-            
-            console.log("You have " + guessesLeft + " guesses left....good luck!!!")
+                //correctAnswer();
+
+
+                console.log("You have " + guessesLeft + " guesses left....good luck!!!")
 
             }
             console.log("Letters Chosen " + letterChoices);
@@ -99,25 +108,51 @@ function askQuestion() {
 
 
         });
-       
+
 
         //   correctAnswer();
         // askQuestion()
-    }else{
+    } else {
         console.log("You lose.....you're no movie buff!!!");
+        console.log("You're out of guesses, the correct word " + chosen + "\n");
+
+        gameRestart();
     }
 
 }
 
-function winLose(){
-	if(correctCounter === chosen.length){
-		console.log("You have become my new best friend......you love movies!!!");
-		//startGame();
-	
-	}
- 	
+function gameRestart() {
+    inquirer.prompt([{
+        type: "confirm",
+        name: "end",
+        message: "Would you like to play again?"
+    }]).then(function(answer) {
+        if (answer.end) {
+            // renderQuestion();
+            // askQuestion();
+            startGame();
+        } else {
+            console.log("I guess were done here!!")
+            return;
+        }
+
+    });
+
 }
+
+function winLose() {
+    if (correctCounter === chosen.length) {
+        console.log("You have become my new best friend......you love movies!!!");
+        console.log("NOW CHOOSE THE LETTER Z UNTIL PROMPTED")
+        //startGame();
+
+    }
+
+
+}
+
 startGame();
+
 //renderQuestion();
 //askQuestion();
 
