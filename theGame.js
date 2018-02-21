@@ -1,6 +1,8 @@
 var inquirer = require("inquirer");
 var newGuess = require("./guesses.js");
 var isLetter = require('is-letter');
+var hello = require('./function.js');
+hello();
 //var newGuess = ["gladiator", "titanic", "avatar", "braveheart", "jaws", "rocky"];
 var chosen;
 var letterChoices = [];
@@ -11,6 +13,7 @@ var losses = 0;
 var guessesLeft = 8;
 var newRender;
 var correctCounter = 0;
+var gameOver = false;
 
 function letter(name) {
     this.name = name;
@@ -58,7 +61,7 @@ function renderQuestion() {
 //letter.prototype.printinfo = function({})
 /////////////////////
 function askQuestion() {
-    if (guessesLeft > 0) {
+    if (guessesLeft > 0 && gameOver == false) {
         console.log("The subjects are all time good movies")
 
         inquirer.prompt([{
@@ -82,13 +85,15 @@ function askQuestion() {
                     if (chosen[i] === choices) {
                         blanks[i] = choices;
                         // blanks[i] =newRender ;
-                        console.log(blanks.join(""));
+                        
                         correctCounter++;
+                        console.log("CorrectCount: " + correctCounter + " / " + chosen.length);
                         winLose();
 
                     }
 
                 }
+                console.log(blanks.join(""));
                 console.log("yes....keep going!");
 
             } else {
@@ -113,15 +118,25 @@ function askQuestion() {
         //   correctAnswer();
         // askQuestion()
     } else {
-        console.log("You lose.....you're no movie buff!!!");
-        console.log("You're out of guesses, the correct word " + chosen + "\n");
-
+    	if ( guessesLeft > 0 ) {
+    		console.log("You have become my new best friend......you love movies!!!");
+        	console.log("NOW CHOOSE THE LETTER Z UNTIL PROMPTED");
+    	} else {
+	        console.log("You lose.....you're no movie buff!!!");
+    	    console.log("You're out of guesses, the correct word " + chosen + "\n");
+    	}
         gameRestart();
     }
 
 }
 
 function gameRestart() {
+	blanks = [];
+	chosen = "";
+	gameOver = false;
+	guessesLeft = 8;
+	correctCounter = 0;
+	letterChoices = [];
     inquirer.prompt([{
         type: "confirm",
         name: "end",
@@ -142,8 +157,7 @@ function gameRestart() {
 
 function winLose() {
     if (correctCounter === chosen.length) {
-        console.log("You have become my new best friend......you love movies!!!");
-        console.log("NOW CHOOSE THE LETTER Z UNTIL PROMPTED")
+        gameOver = true;
         //startGame();
 
     }
