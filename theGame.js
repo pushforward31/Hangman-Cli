@@ -120,7 +120,7 @@ function askQuestion() {
     } else {
     	if ( guessesLeft > 0 ) {
     		console.log("You have become my new best friend......you love movies!!!");
-        	console.log("NOW CHOOSE THE LETTER Z UNTIL PROMPTED");
+//console.log("NOW CHOOSE THE LETTER Z UNTIL PROMPTED");
     	} else {
 	        console.log("You lose.....you're no movie buff!!!");
     	    console.log("You're out of guesses, the correct word " + chosen + "\n");
