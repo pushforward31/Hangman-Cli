@@ -1,5 +1,5 @@
 var inquirer = require("inquirer");
-var newGuess = require("./guesses.js");
+var newGuess = require("./words.js");
 var isLetter = require('is-letter');
 var hello = require('./function.js');
 hello();
